@@ -206,63 +206,10 @@ Array.prototype.remove = function(val) {
 //When click a Node
 function teamClick(d) {
     selectedTeamName = d.teamname;
-    if (contains(teamList, selectedTeamName)) { //Contains the node
-        //Restore the node color
-        d3.select(this)
-            .style("fill", function(d){
-            if (d.EASTorWEST == "East") {
-                return "blue";
-            } else {
-                return "red";
-            };
-        });
-
-        //Remove the selected team data
-        for (var i = 0; i < teamRadarData.length; i++) {
-            if (selectedTeamName == teamRadarData[i].className) {
-                teamRadarData.remove(teamRadarData[i]);
-                break;
-            };
-        }
-
-        //Remove in the teamList;
-        teamList.remove(selectedTeamName);
-
-        //Existing node number after deleting
-        if (teamList.length == 0) {
-            d3.selectAll(".pie-chart").remove();
-        }
-        if (teamList.length == 1) {
-            createPieChart();
-            d3.selectAll(".teamRadar").remove();
-        }
-        if  (teamList.length >= 2) {
-            renderRadarChart();
-        }
-    } else {    //Does not contain the node
-        teamList.push(selectedTeamName);
-        active = d3.select(this).style("fill", "orange");
-        if (teamList.length == 1) {
-            createPieChart();
-            //Push the team data for radar chart, but not display
-            d3.csv("data/teamstats.csv", function(teamData) {
-                //Loop through once for each team data value
-                pushTeamRadarData(teamData);
-            });
-
-        }
-        if (teamList.length >= 2) {
-            //remove the pie chart
-            d3.selectAll(".pie-chart").remove();
-
-            //Push the team data for radar chart, draw but not display
-            d3.csv("data/teamstats.csv", function(teamData) {
-                //Loop through once for each team data value
-                pushTeamRadarData(teamData);
-                renderRadarChart();
-            });
-        }
-    }
+    console.log(selectedTeamName);
+    var fileName = "./" + selectedTeamName + ".html";
+    var newWin = open(fileName, '', 'width=1000,height=800');
+    d3.select(this).on("Click",newWin);
 
 }
 
@@ -302,10 +249,6 @@ function stateClick(d) {
         y = (bounds[0][1] + bounds[1][1]) / 2,
         scale = 0.7 / Math.max(dx / w, dy / h),
         translate = [w / 2 - scale * x, h / 2 - scale * y];
-
-    svg.transition()
-        .duration(600)
-        .call(zoom.translate(translate).scale(scale).event);
 
     g.append("text")
         .attr("class", "text-" + d.properties.postal)
