@@ -22,7 +22,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-//Map the winrate to opacity[0.3, 0.9]
+//Map the winrate*100 to opacity[0.3, 0.9]
 var Opacity = d3.scale.linear()
     .range([0.2, 0.9]);
 
@@ -80,9 +80,9 @@ d3.csv("data/US-states.csv", function(data) {
                 if (EASTorWEST) {
                     //If value exists…
                     if (EASTorWEST == "East") {
-                        return "#C6E2FF";
+                        return "#7abbff";
                     } else {
-                        return "#FFB6C1";
+                        return "#ff9493";
                     }
                 } else {
                     //If value is undefined…
@@ -92,14 +92,14 @@ d3.csv("data/US-states.csv", function(data) {
             .on("click", stateClick);
 
         //Load in NBA teams data
-        d3.csv("data/NBA-teams.csv", function(data) {
+        d3.csv("new_data/team_info.csv", function(data) {
             //Map the rank to radius[2, 20]
-            Scale.domain([0, d3.max(data, function(d) { return d.winrate; })]);
+            Scale.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
 
             //Map the rank to opacity[0.3, 0.9]
-            Opacity.domain([0, d3.max(data, function(d) { return d.winrate; })]);
+            Opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
 
-            //Map the winrate to fontsize[10, 20]
+            //Map the winrate*100 to fontsize[10, 20]
             var FontSize = d3.scale.linear()
                 .domain([15, 1])
                 .range([10, 20]);
@@ -118,9 +118,9 @@ d3.csv("data/US-states.csv", function(data) {
 
             //Circles for teams
             nodes.append("circle")
-                .attr("class", function(d) { return d.abb })
+                .attr("class", function(d) { return d.abbr })
                 .attr("r", function(d){
-                    return Scale(d.winrate);})
+                    return Scale(parseInt(d.winrate*100));})
                 .style("fill", function(d){
                     if (d.EASTorWEST == "East") {
                         return "blue";
@@ -129,16 +129,16 @@ d3.csv("data/US-states.csv", function(data) {
                     };
                 })
                 .style("opacity", function(d){
-                    return Opacity(d.winrate);})
+                    return Opacity(parseInt(d.winrate*100));})
                 .style("cursor", "pointer")
                 .on("click", teamClick);
 
             //Text for temm abbreviation
             nodes.append("text")
                 .attr("class", function(d) {
-                    return "text " + d.abb;})
+                    return "text " + d.abbr;})
                 .attr("dx", function(d){
-                    return Scale(d.winrate);})
+                    return Scale(parseInt(d.winrate*100));})
                 .attr("dy", ".3em")
                 .attr("font-size", function(d) {
                     return FontSize(d.rank) + "px";})
@@ -146,66 +146,16 @@ d3.csv("data/US-states.csv", function(data) {
                 .style("font-weight", "bold")
                 .style("cursor", "default")
                 .text(function(d) {
-                    return d.abb;});
+                    return d.abbr;});
         });
     });
 });
 
-//default config
-var defaultConfig = radarChart.config();
-//defaultConfig.w and defaultConfig.h is 600
-radarChart.config({w: 300, h: 300, levels: 4, maxValue: 100});
-//TeamData for Rader chart
-var teamRadarData = [];
-//List of teams
-var teamList = [];
-
-//Return the map of a team
-function teamDataset(teamRadarData) {
-    return teamRadarData.map(function(d) {
-        return {
-            className: d.className,
-            axes: d.axes.map(function(axis) {
-                return { axis: axis.axis, value: axis.value };})
-        };
-    });
-}
-
-//Regularize the rank, rank 1 to 30 points
-function regularizeRank(rank) {
-    return ((31 - rank) / 30 * 100).toFixed(1);
-}
-
-//Judge if is in the array
-function contains(array, obj) {
-    var i = array.length;
-    while (i--) {
-        if (array[i] === obj) {
-            return true;
-        }
-    }
-    return false;
-}
-
-//Get the index of the element in an array
-Array.prototype.indexOf = function(val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] == val) return i;
-    }
-    return -1;
-};
-
-//Delete an element in an array
-Array.prototype.remove = function(val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
-};
 
 //When click a Node
 function teamClick(d) {
-    selectedTeamName = d.teamname;
+    console.log(d);
+    selectedTeamName = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
     console.log(selectedTeamName);
     var fileName = "./" + selectedTeamName + ".html";
     var newWin = open(fileName, '', 'width=1000,height=800');
@@ -267,24 +217,55 @@ function stopped() {
     }
 }
 
+//Emphasize
 function nodeMouseover(d){
     d3.select(this).select("circle")
         .transition()
         .duration(200)
         .attr("r", function(d){
-            return 1.5 * Scale(d.winrate); })
+            return 1.5 * Scale(parseInt(d.winrate*100)); })
         .style("opacity", 1)
         .style("stroke-width", "2px");
 
-}
+    d3.select(this).select("text")
+        .transition()
+        .duration(200)
+        .attr("dx", function(d){
+            return 1.5 * Scale(parseInt(d.winrate*100));})
+        .style("fill", "#000000")
+        .text(function(d) {
+            return d.abbr + " (" + parseInt(d.winrate*100 )+ "%)";});
 
+    //Append the logo of the team
+    g.append("image")
+        .attr("class", d.abbr)
+        .attr("xlink:href", "logo/" + d.abbr + "_logo.svg")
+        .attr("width", image_w + "px")
+        .attr("height", image_h + "px")
+        //remove the blink effect
+        .attr("x", projection([d.lon, d.lat])[0] + 5)
+        .attr("y", projection([d.lon, d.lat])[1] + 5);
+}
+//Get back to original status
 function nodeMouseout(d){
     d3.select(this).select("circle")
         .transition()
         .duration(200)
         .attr("r", function(d) {
-            return Scale(d.winrate); })
+            return Scale(parseInt(d.winrate*100)); })
         .style("opacity", function(d){
-            return Opacity(d.winrate);})
+            return Opacity(parseInt(d.winrate*100));})
         .style("stroke-width", "1px");
+
+    d3.select(this).select("text")
+        .transition()
+        .duration(200)
+        .attr("dx", function(d){
+            return Scale(parseInt(d.winrate*100));})
+        .style("fill", "#888888")
+        .text(function(d) {
+            return d.abbr});
+
+    g.select("image")
+        .remove();
 }
