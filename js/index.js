@@ -73,7 +73,7 @@ d3.csv("data/US-states.csv", function(data) {
 
             Opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
 
-            var FontSize = d3.scale.linear()
+            var font_Size = d3.scale.linear()
                 .domain([15, 1])
                 .range([10, 20]);
 
@@ -84,8 +84,8 @@ d3.csv("data/US-states.csv", function(data) {
                 .attr("class", "team")
                 .attr("transform", function(d) {
                     return "translate(" + projection([d.lon, d.lat])[0] + "," + projection([d.lon, d.lat])[1] + ")";})
-                .on("mouseover", nodeMouseover)
-                .on("mouseout", nodeMouseout);
+                .on("mouseover", hover_on_node)
+                .on("mouseout", hover_out_node);
 
 
             nodes.append("circle")
@@ -111,7 +111,7 @@ d3.csv("data/US-states.csv", function(data) {
                     return Scale(parseInt(d.winrate*100));})
                 .attr("dy", ".3em")
                 .attr("font-size", function(d) {
-                    return FontSize(d.rank) + "px";})
+                    return font_Size(d.rank) + "px";})
                 .style("fill", "#888888")
                 .style("font-weight", "bold")
                 .style("cursor", "default")
@@ -178,7 +178,7 @@ function stopped() {
     }
 }
 
-function nodeMouseover(d){
+function hover_on_node(d){
     d3.select(this).select("circle")
         .transition()
         .duration(200)
@@ -205,7 +205,7 @@ function nodeMouseover(d){
         .attr("y", projection([d.lon, d.lat])[1] + 5);
 }
 
-function nodeMouseout(d){
+function hover_out_node(d){
     d3.select(this).select("circle")
         .transition()
         .duration(200)
