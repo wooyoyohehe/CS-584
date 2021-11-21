@@ -35,11 +35,11 @@ d3.csv("data/US-states.csv", function(data) {
         for (var i = 0; i < data.length; i++) {
             var dataState = data[i].state;				
             var dataValue = parseFloat(data[i].value);	
-            var dataEASTorWEST = data[i].EASTorWEST;
+            var dataEASTorWEST = data[i].E_W;
             for (var j = 0; j < json.features.length; j++) {
                 var jsonState = json.features[j].properties.name;
                 if (dataState == jsonState) {
-                    json.features[j].properties.EASTorWEST = dataEASTorWEST;
+                    json.features[j].properties.E_W = dataEASTorWEST;
                     break;
                 }
             }
@@ -54,10 +54,10 @@ d3.csv("data/US-states.csv", function(data) {
             .attr("class", function(d) {
                 return d.properties.postal;})
             .style("fill", function(d) {
-                var EASTorWEST = d.properties.EASTorWEST;
+                var E_W = d.properties.E_W;
 
-                if (EASTorWEST) {
-                    if (EASTorWEST == "East") {
+                if (E_W) {
+                    if (E_W == "East") {
                         return "#7abbff";
                     } else {
                         return "#ff9493";
@@ -66,7 +66,7 @@ d3.csv("data/US-states.csv", function(data) {
                     return "#CCCCCC";
                 }
             })
-            .on("click", stateClick);
+            .on("click", click_on_state);
 
         d3.csv("new_data/team_info.csv", function(data) {
             Scale.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
@@ -93,7 +93,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .attr("r", function(d){
                     return Scale(parseInt(d.winrate*100));})
                 .style("fill", function(d){
-                    if (d.EASTorWEST == "East") {
+                    if (d.E_W == "East") {
                         return "blue";
                     } else {
                         return "red";
@@ -102,7 +102,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .style("opacity", function(d){
                     return Opacity(parseInt(d.winrate*100));})
                 .style("cursor", "pointer")
-                .on("click", teamClick);
+                .on("click", click_on_team);
 
             nodes.append("text")
                 .attr("class", function(d) {
@@ -122,7 +122,7 @@ d3.csv("data/US-states.csv", function(data) {
 });
 
 
-function teamClick(d) {
+function click_on_team(d) {
     console.log(d);
     selectedTeamName = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
     console.log(selectedTeamName);
@@ -133,12 +133,12 @@ function teamClick(d) {
 }
 
 
-function stateClick(d) {
+function click_on_state(d) {
     if (active.node() == this) {
         active.style("fill", function(d) {
-            var EASTorWEST = d.properties.EASTorWEST;
-            if (EASTorWEST) {
-                if (EASTorWEST == "East") {
+            var E_W = d.properties.E_W;
+            if (E_W) {
+                if (E_W == "East") {
                     return "#C6E2FF";
                 } else {
                     return "#FFB6C1";
