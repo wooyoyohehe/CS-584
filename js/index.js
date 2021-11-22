@@ -101,8 +101,11 @@ d3.csv("data/US-states.csv", function(data) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             var font_Size = d3.scale.linear()
 =======
+=======
+>>>>>>> parent of c63300a (Update index.js)
 =======
 >>>>>>> parent of c63300a (Update index.js)
             //Map the winrate*100 to fontsize[10, 20]
@@ -161,8 +164,11 @@ d3.csv("data/US-states.csv", function(data) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 function click_on_team(d) {
 =======
+=======
+>>>>>>> parent of c63300a (Update index.js)
 =======
 >>>>>>> parent of c63300a (Update index.js)
 //When click a Node
@@ -184,6 +190,9 @@ function click_on_state(d) {
 function stateClick(d) {
     //Inverse when have selected
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of c63300a (Update index.js)
+=======
 >>>>>>> parent of c63300a (Update index.js)
 =======
 >>>>>>> parent of c63300a (Update index.js)
@@ -239,8 +248,11 @@ function stopped() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 function hover_on_node(d){
 =======
+=======
+>>>>>>> parent of c63300a (Update index.js)
 =======
 >>>>>>> parent of c63300a (Update index.js)
 //Emphasize
@@ -275,9 +287,12 @@ function nodeMouseover(d){
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function hover_out_node(d){
 =======
+=======
+>>>>>>> parent of c63300a (Update index.js)
 =======
 >>>>>>> parent of c63300a (Update index.js)
 //Get back to original status
