@@ -35,11 +35,11 @@ d3.csv("data/US-states.csv", function(data) {
         for (var i = 0; i < data.length; i++) {
             var dataState = data[i].state;				
             var dataValue = parseFloat(data[i].value);	
-            var dataEASTorWEST = data[i].E_W;
+            var dataEASTorWEST = data[i].EASTorWEST;
             for (var j = 0; j < json.features.length; j++) {
                 var jsonState = json.features[j].properties.name;
                 if (dataState == jsonState) {
-                    json.features[j].properties.E_W = dataEASTorWEST;
+                    json.features[j].properties.EASTorWEST = dataEASTorWEST;
                     break;
                 }
             }
@@ -54,10 +54,10 @@ d3.csv("data/US-states.csv", function(data) {
             .attr("class", function(d) {
                 return d.properties.postal;})
             .style("fill", function(d) {
-                var E_W = d.properties.E_W;
+                var EASTorWEST = d.properties.EASTorWEST;
 
-                if (E_W) {
-                    if (E_W == "East") {
+                if (EASTorWEST) {
+                    if (EASTorWEST == "East") {
                         return "#7abbff";
                     } else {
                         return "#ff9493";
@@ -93,7 +93,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .attr("r", function(d){
                     return Scale(parseInt(d.winrate*100));})
                 .style("fill", function(d){
-                    if (d.E_W == "East") {
+                    if (d.EASTorWEST == "East") {
                         return "blue";
                     } else {
                         return "red";
@@ -136,9 +136,9 @@ function click_on_team(d) {
 function click_on_state(d) {
     if (active.node() == this) {
         active.style("fill", function(d) {
-            var E_W = d.properties.E_W;
-            if (E_W) {
-                if (E_W == "East") {
+            var EASTorWEST = d.properties.EASTorWEST;
+            if (EASTorWEST) {
+                if (EASTorWEST == "East") {
                     return "#C6E2FF";
                 } else {
                     return "#FFB6C1";
@@ -150,7 +150,6 @@ function click_on_state(d) {
         stateAbb = d3.select(this).attr("class");
         svg.selectAll(".text-" + stateAbb).remove();
 
-        return stateReset();
     }
 
     active = d3.select(this).style("fill", "orange");
