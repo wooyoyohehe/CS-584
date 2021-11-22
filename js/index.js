@@ -68,7 +68,7 @@ d3.csv("data/US-states.csv", function(data) {
             })
             .on("click", click_on_state);
 
-        d3.csv("new_data/team_info.csv", function(data) {
+        d3.csv("data/team_info.csv", function(data) {
             Scale.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
             Opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
             var font_Size = d3.scale.linear()
