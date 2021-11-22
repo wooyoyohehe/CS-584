@@ -35,7 +35,6 @@ d3.csv("data/US-states.csv", function(data) {
     d3.json("data/US-geo.json", function(json) {
         for (var i = 0; i < data.length; i++) {
             var dataState = data[i].state;				
-            var dataValue = parseFloat(data[i].value);
             var dataEASTorWEST = data[i].EASTorWEST;
             for (var j = 0; j < json.features.length; j++) {
                 var jsonState = json.features[j].properties.name;
