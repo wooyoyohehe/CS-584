@@ -49,7 +49,6 @@ d3.csv("data/US-states.csv", function(data) {
         //Merge the EastorWest data and GeoJSON
         //Loop through once for each EastorWest data value
         for (var i = 0; i < data.length; i++) {
-<<<<<<< HEAD
             var dataState = data[i].state;				//Grab state name
             var dataValue = parseFloat(data[i].value);	//Grab data value, and convert from string to float
             var dataEASTorWEST = data[i].EASTorWEST;
@@ -60,15 +59,6 @@ d3.csv("data/US-states.csv", function(data) {
                     //Copy the data value into the JSON
                     json.features[j].properties.EASTorWEST = dataEASTorWEST;
                     //Stop looking through the JSON
-=======
-            var dataState = data[i].state;				
-            var dataValue = parseFloat(data[i].value);	
-            var dataEASTorWEST = data[i].EASTorWEST;
-            for (var j = 0; j < json.features.length; j++) {
-                var jsonState = json.features[j].properties.name;
-                if (dataState == jsonState) {
-                    json.features[j].properties.EASTorWEST = dataEASTorWEST;
->>>>>>> parent of d257baa (Update index.js)
                     break;
                 }
             }
@@ -84,17 +74,11 @@ d3.csv("data/US-states.csv", function(data) {
             .attr("class", function(d) {
                 return d.properties.postal;})
             .style("fill", function(d) {
-<<<<<<< HEAD
                 //Get data value
                 var EASTorWEST = d.properties.EASTorWEST;
 
                 if (EASTorWEST) {
                     //If value exists…
-=======
-                var EASTorWEST = d.properties.EASTorWEST;
-
-                if (EASTorWEST) {
->>>>>>> parent of d257baa (Update index.js)
                     if (EASTorWEST == "East") {
                         return "#7abbff";
                     } else {
@@ -105,7 +89,7 @@ d3.csv("data/US-states.csv", function(data) {
                     return "#CCCCCC";
                 }
             })
-            .on("click", stateClick);
+            .on("click", click_on_state);
 
         //Load in NBA teams data
         d3.csv("new_data/team_info.csv", function(data) {
@@ -114,19 +98,9 @@ d3.csv("data/US-states.csv", function(data) {
 
             //Map the rank to opacity[0.3, 0.9]
             Opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             var font_Size = d3.scale.linear()
-=======
-=======
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
             //Map the winrate*100 to fontsize[10, 20]
             var FontSize = d3.scale.linear()
->>>>>>> parent of c63300a (Update index.js)
                 .domain([15, 1])
                 .range([10, 20]);
 
@@ -157,7 +131,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .style("opacity", function(d){
                     return Opacity(parseInt(d.winrate*100));})
                 .style("cursor", "pointer")
-                .on("click", teamClick);
+                .on("click", click_on_team);
 
             //Text for temm abbreviation
             nodes.append("text")
@@ -177,23 +151,8 @@ d3.csv("data/US-states.csv", function(data) {
     });
 });
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-function click_on_team(d) {
-=======
-=======
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
 //When click a Node
 function teamClick(d) {
->>>>>>> parent of c63300a (Update index.js)
-=======
-function teamClick(d) {
->>>>>>> parent of d257baa (Update index.js)
     console.log(d);
     selectedTeamName = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
     console.log(selectedTeamName);
@@ -204,32 +163,15 @@ function teamClick(d) {
 }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-function click_on_state(d) {
-=======
 function stateClick(d) {
     //Inverse when have selected
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
+
     if (active.node() == this) {
         active.style("fill", function(d) {
             //Get data value
             var EASTorWEST = d.properties.EASTorWEST;
             if (EASTorWEST) {
                 //If value exists…
-=======
-function stateClick(d) {
-    if (active.node() == this) {
-        active.style("fill", function(d) {
-            var EASTorWEST = d.properties.EASTorWEST;
-            if (EASTorWEST) {
->>>>>>> parent of d257baa (Update index.js)
                 if (EASTorWEST == "East") {
                     return "#C6E2FF";
                 } else {
@@ -274,18 +216,8 @@ function stopped() {
     }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-function hover_on_node(d){
-=======
-=======
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
 //Emphasize
 function nodeMouseover(d){
->>>>>>> parent of c63300a (Update index.js)
     d3.select(this).select("circle")
         .transition()
         .duration(200)
@@ -313,19 +245,10 @@ function nodeMouseover(d){
         .attr("x", projection([d.lon, d.lat])[0] + 5)
         .attr("y", projection([d.lon, d.lat])[1] + 5);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-function hover_out_node(d){
-=======
-=======
->>>>>>> parent of c63300a (Update index.js)
-=======
->>>>>>> parent of c63300a (Update index.js)
+
 //Get back to original status
 function nodeMouseout(d){
->>>>>>> parent of c63300a (Update index.js)
     d3.select(this).select("circle")
         .transition()
         .duration(200)
@@ -346,4 +269,4 @@ function nodeMouseout(d){
 
     g.select("image")
         .remove();
-}
+    }
