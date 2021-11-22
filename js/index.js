@@ -89,7 +89,7 @@ d3.csv("data/US-states.csv", function(data) {
                     return "#CCCCCC";
                 }
             })
-            .on("click", click_on_state);
+            .on("click", stateClick);
 
         //Load in NBA teams data
         d3.csv("new_data/team_info.csv", function(data) {
@@ -112,8 +112,8 @@ d3.csv("data/US-states.csv", function(data) {
                 .attr("class", "team")
                 .attr("transform", function(d) {
                     return "translate(" + projection([d.lon, d.lat])[0] + "," + projection([d.lon, d.lat])[1] + ")";})
-                .on("mouseover", hover_on_node)
-                .on("mouseout", hover_out_node);
+                .on("mouseover", nodeMouseover)
+                .on("mouseout", nodeMouseout);
 
 
             //Circles for teams
@@ -131,7 +131,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .style("opacity", function(d){
                     return Opacity(parseInt(d.winrate*100));})
                 .style("cursor", "pointer")
-                .on("click", click_on_team);
+                .on("click", teamClick);
 
             //Text for temm abbreviation
             nodes.append("text")
