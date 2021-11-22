@@ -1,9 +1,6 @@
 var whole_w = 1024;
 var whole_h = 768;
 
-var windowWidth = window.screen.availWidth;
-var tipOffset = [0, (windowWidth - whole_w) / 2];
-
 var image_w = 200;
 var image_h = 200;
 
@@ -121,9 +118,9 @@ d3.csv("data/US-states.csv", function(data) {
 
 function click_on_team(d) {
     console.log(d);
-    selectedTeamName = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
-    console.log(selectedTeamName);
-    var fileName = "./" + selectedTeamName + ".html";
+    selected_team_name = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
+    console.log(selected_team_name);
+    var fileName = "./" + selected_team_name + ".html";
     var newWin = open(fileName, '', 'width=1000,height=800');
     d3.select(this).on("Click",newWin);
 
