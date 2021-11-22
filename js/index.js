@@ -1,8 +1,17 @@
 var whole_w = 1024;
-var whole_h = 768;
+var whole_h = 800;
 
-var image_w = 200;
-var image_h = 200;
+var image_w = 300;
+var image_h = 300;
+
+
+var svg = d3.select("body")
+.append("svg")
+.attr("width", whole_w)
+.attr("height", whole_h);
+
+var g = svg.append("g")
+    .attr("class","map");
 
 var active = d3.select(null);
 
@@ -13,19 +22,13 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var Opacity = d3.scale.linear()
+var opacity = d3.scale.linear()
     .range([0.2, 0.9]);
 
-var Scale = d3.scale.linear()
+var scale = d3.scale.linear()
     .range([2, 20]);
 
-var svg = d3.select("body")
-    .append("svg")
-    .attr("width", whole_w)
-    .attr("height", whole_h);
 
-var g = svg.append("g")
-    .attr("class","map");
 
 
 d3.csv("data/US-states.csv", function(data) {
@@ -66,8 +69,8 @@ d3.csv("data/US-states.csv", function(data) {
             .on("click", click_on_state);
 
         d3.csv("data/team_info.csv", function(data) {
-            Scale.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
-            Opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
+            scale.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
+            opacity.domain([0, d3.max(data, function(d) { return parseInt(d.winrate*100) })]);
             var font_Size = d3.scale.linear()
             var FontSize = d3.scale.linear()
                 .domain([15, 1])
@@ -86,7 +89,7 @@ d3.csv("data/US-states.csv", function(data) {
             nodes.append("circle")
                 .attr("class", function(d) { return d.abbr })
                 .attr("r", function(d){
-                    return Scale(parseInt(d.winrate*100));})
+                    return scale(parseInt(d.winrate*100));})
                 .style("fill", function(d){
                     if (d.EASTorWEST == "East") {
                         return "blue";
@@ -95,7 +98,7 @@ d3.csv("data/US-states.csv", function(data) {
                     };
                 })
                 .style("opacity", function(d){
-                    return Opacity(parseInt(d.winrate*100));})
+                    return opacity(parseInt(d.winrate*100));})
                 .style("cursor", "pointer")
                 .on("click", click_on_team);
 
@@ -103,7 +106,7 @@ d3.csv("data/US-states.csv", function(data) {
                 .attr("class", function(d) {
                     return "text " + d.abbr;})
                 .attr("dx", function(d){
-                    return Scale(parseInt(d.winrate*100));})
+                    return scale(parseInt(d.winrate*100));})
                 .attr("dy", ".3em")
                 .attr("font-size", function(d) {
                     return font_Size(d.rank) + "px";})
@@ -138,7 +141,7 @@ function click_on_state(d) {
                     return "#FFB6C1";
                 }
             } else {
-                return "#ccc";
+                return "#CCCCCC";
             }
         });
         stateAbb = d3.select(this).attr("class");
@@ -170,7 +173,7 @@ function hover_on_node(d){
         .transition()
         .duration(200)
         .attr("r", function(d){
-            return 1.5 * Scale(parseInt(d.winrate*100)); })
+            return 1.5 * scale(parseInt(d.winrate*100)); })
         .style("opacity", 1)
         .style("stroke-width", "2px");
 
@@ -178,7 +181,7 @@ function hover_on_node(d){
         .transition()
         .duration(200)
         .attr("dx", function(d){
-            return 1.5 * Scale(parseInt(d.winrate*100));})
+            return 1.5 * scale(parseInt(d.winrate*100));})
         .style("fill", "#000000")
         .text(function(d) {
             return d.abbr + " (" + parseInt(d.winrate*100 )+ "%)";});
@@ -198,20 +201,20 @@ function hover_off_node(d){
         .transition()
         .duration(200)
         .attr("r", function(d) {
-            return Scale(parseInt(d.winrate*100)); })
+            return scale(parseInt(d.winrate*100)); })
         .style("opacity", function(d){
-            return Opacity(parseInt(d.winrate*100));})
+            return opacity(parseInt(d.winrate*100));})
         .style("stroke-width", "1px");
 
     d3.select(this).select("text")
         .transition()
         .duration(200)
         .attr("dx", function(d){
-            return Scale(parseInt(d.winrate*100));})
+            return scale(parseInt(d.winrate*100));})
         .style("fill", "#888888")
         .text(function(d) {
             return d.abbr});
-
+    // not overlap
     g.select("image")
         .remove();
     }
