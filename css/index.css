@@ -2,12 +2,12 @@ body {
     margin: 0 auto;
     position: absolute;
     left: 50%;
-    width: 2048px;
-    margin-left: -1024px;
+    width: 1024px;
+    margin-left: -512px;
   	text-algin:center;
 }
 
-.date {
+.date{
     position: absolute;
     margin: 5px 0 0 800px;
     font-style: italic;
