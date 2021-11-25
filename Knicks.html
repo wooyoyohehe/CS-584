@@ -4,10 +4,27 @@
 <head>
     <title></title>
 </head>
+<script src='https://d3js.org/d3.v4.min.js'></script>
 <script>
-</script>
+   var x = "";
+   d3.csv("new_data/player_info.csv", function(data) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].TEAM == "NYK"){
+           x += "<li><button id =" + '"' + data[i].Player + '"' + "onClick =" + '"show(this.id)"' +">";
+           x += data[i].Player + "</button></li>";
+        }
+    }
+    document.getElementById("play_list").innerHTML = x;
+});
+   function show(id){
+        alert(id);
+   }
+</script> 
 <body>
     <h1>The player data page for New York Knicks</h1>
+    <ol id = "play_list">
+      </ol>
+      
 </body>
 
 </html>`
