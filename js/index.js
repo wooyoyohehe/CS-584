@@ -123,8 +123,8 @@ function click_on_team(d) {
     console.log(d);
     selected_team_name = d.TEAM.split(' ')[d.TEAM.split(' ').length - 1];
     console.log(selected_team_name);
-    var fileName = "./" + selected_team_name + ".html";
-    var newWin = open(fileName, '', 'width=1000,height=800');
+    var fileName = selected_team_name + ".html";
+    var newWin = open(fileName, '', 'width=1500,height=1200');
     d3.select(this).on("Click",newWin);
 
 }

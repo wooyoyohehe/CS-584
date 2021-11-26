@@ -4,27 +4,86 @@
 <head>
     <title></title>
 </head>
-<script src='https://d3js.org/d3.v4.min.js'></script>
-<script>
-   var x = "";
-   d3.csv("new_data/player_info.csv", function(data) {
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].TEAM == "NYK"){
-           x += "<li><button id =" + '"' + data[i].Player + '"' + "onClick =" + '"show(this.id)"' +">";
-           x += data[i].Player + "</button></li>";
-        }
+<style>
+    h1 {
+        color: red;
     }
-    document.getElementById("play_list").innerHTML = x;
-});
-   function show(id){
+
+    #leftbox {
+        float: left;
+        width: 50%;
+        height: 280px;
+    }
+
+    #rightbox {
+        float: right;
+        width: 50%;
+        height: 280px;
+    }
+</style>
+<script src='https://d3js.org/d3.v4.min.js'></script>
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-radar.min.js"></script>
+<script>
+    var x = "";
+    var coll = new Map();
+    d3.csv("new_data/player_info.csv", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].TEAM == "NYK") {
+
+                x += "<li><button id =" + '"' + data[i].Player + '"' + "onClick =" + '"show(this.id)"' + ">";
+                x += data[i].Player + "</button></li>";
+                var socre = { x: "Score", value: parseInt(data[i].PTS) / parseInt(data[i].GP) };
+                var reb = { x: "Reb", value: parseInt(data[i].REB) / parseInt(data[i].GP) };
+                var ast = { x: "Ast", value: parseInt(data[i].AST) / parseInt(data[i].GP) };
+                var stl = { x: "Stl", value: parseInt(data[i].STL) / parseInt(data[i].GP) };
+                var blk = { x: "Blk", value: parseInt(data[i].BLK) / parseInt(data[i].GP) };
+                var tov = { x: "Tov", value: parseInt(data[i].TOV) / parseInt(data[i].GP) };
+                var datas = [socre, reb, ast, stl, blk, tov];
+                coll.set(data[i].Player, datas);
+            }
+        }
+        document.getElementById("boxes").children[0].children[0].innerHTML = x;
+    });
+    function show(id) {
         alert(id);
-   }
-</script> 
+        console.log(id);
+        console.log(coll.get(id));
+
+        anychart.onDocumentReady(function () {
+            var chart = anychart.radar();
+
+            // color alternating cells
+            chart.yGrid().palette(["gray 0.1", "gray 0.2"]);
+
+            chart.area(coll.get(id)).name(id).markers(true).fill("#E55934", 0.3).stroke("#E55934");
+            // create second series
+            // set chart title
+            chart.title("Data for " + id);
+
+            // set container id for the chart
+            chart.container('rightbox');
+            // initiate chart drawing
+            chart.draw();
+        });
+    }
+
+</script>
+
 <body>
     <h1>The player data page for New York Knicks</h1>
-    <ol id = "play_list">
-      </ol>
-      
+
+    <div id="boxes">
+
+        <div id="leftbox">
+            <ol id="play_list">
+            </ol>
+        </div>
+        <div id="rightbox">
+
+        </div>
+    </div>
+
 </body>
 
 </html>`
