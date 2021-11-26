@@ -79,7 +79,7 @@
     var coll = new Map();
     d3.csv("new_data/player_info.csv", function (data) {
         for (var i = 0; i < data.length; i++) {
-            if (data[i].TEAM == "NYK") {
+            if (data[i].TEAM == "BOS") {
 
                 x += "<li><button class='modern' id =" + '"' + data[i].Player + '"' + "onClick =" + '"show(this.id)"' + ">";
                 x += data[i].Player + "</button></li>";
@@ -121,7 +121,7 @@
 </script>
 
 <body>
-    <h1>The player data page for New York Knicks</h1>
+    <h1>The player data page for Boston Celtics</h1>
 
     <div id="boxes">
 
@@ -129,7 +129,7 @@
             <ol id="play_list">
             </ol>
         </div>
-        <div class="intro_style" id="middlebox"><img src="logo/NYK_logo.svg" width="300" height="300" class="center"><h2>Intro</h2>The New York Knickerbockers, shortened and more commonly referred to as the New York Knicks, are an American professional basketball team based in the New York City borough of Manhattan. The Knicks compete in the National Basketball Association (NBA) as a member of the Atlantic Division of the Eastern Conference. The team plays its home games at Madison Square Garden, an arena they share with the New York Rangers of the National Hockey League (NHL). They are one of two NBA teams located in New York City; the other team is the Brooklyn Nets. Alongside the Boston Celtics, the Knicks are one of two original NBA teams still located in its original city.</div>
+        <div class="intro_style" id="middlebox"><img src="logo/BOS_logo.svg" width="300" height="300" class="center"><h2>Intro</h2>The Boston Celtics are an American professional basketball team based in Boston. The Celtics compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Atlantic Division. Founded in 1946 as one of the league's original eight teams, the Celtics play their home games at TD Garden, which they share with the National Hockey League's Boston Bruins. The Celtics are regarded as one of the most successful basketball teams in NBA history; the franchise is tied with the Los Angeles Lakers for most NBA Championships won with 17 (accounting for 23.6 percent of all NBA championships since the league's founding) and currently holds the record for the most recorded wins of any NBA team. The Celtics are one of the two charter BAA franchises (the other is the New York Knicks) still playing in their original city.</div>
         <div class="intro_style" id="rightbox">The randar charts will be shown here if players are clicked.
 
         </div>
