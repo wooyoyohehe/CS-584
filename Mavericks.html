@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+<style>
+    h1 {
+        color: black;
+        font-family: "Lucida Console";
+    }
+
+    #leftbox {
+        float: left;
+        width: 33%;
+        height: 280px;
+    }
+
+    #middlebox {
+        float: left;
+        width: 33%;
+        height: 280px;
+    }
+
+    #rightbox {
+        float: right;
+        width: 33%;
+        height: 280px;
+    }
+
+    .intro_style {
+        font-family: "Lucida Console";
+        text-align: justify;
+        line-height: 1.8;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    .modern {
+        display: block;
+        margin: 10px;
+        padding: 8px 15px;
+        background: white;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        transition: all 0.3s ease-out;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.5),
+            0 2px 2px rgba(0, 0, 0, 0.3),
+            0 0 4px 1px rgba(0, 0, 0, 0.2);
+
+        /* Font styles */
+        font-family: "Lucida Console", Times, serif;
+        text-decoration: none;
+        text-shadow: 0 1px rgba(255, 255, 255, 0.7);
+    }
+
+    .modern:hover {
+        background: #C7FE0A;
+    }
+
+    li {
+        list-style-type: none;
+        background: rgb(255, 255, 255);
+        margin-bottom: 20px;
+    }
+
+    .button_style {
+        /* Font styles */
+        text-decoration: none;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #222;
+    }
+</style>
+<script src='https://d3js.org/d3.v4.min.js'></script>
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-radar.min.js"></script>
+<script>
+    var x = "";
+    var coll = new Map();
+    d3.csv("new_data/player_info.csv", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].TEAM == "DAL") {
+
+                x += "<li><button class='modern' id =" + '"' + data[i].Player + '"' + "onClick =" + '"show(this.id)"' + ">";
+                x += data[i].Player + "</button></li>";
+                var socre = { x: "Score", value: parseInt(data[i].PTS) / parseInt(data[i].GP) };
+                var reb = { x: "Reb", value: parseInt(data[i].REB) / parseInt(data[i].GP) };
+                var ast = { x: "Ast", value: parseInt(data[i].AST) / parseInt(data[i].GP) };
+                var stl = { x: "Stl", value: parseInt(data[i].STL) / parseInt(data[i].GP) };
+                var blk = { x: "Blk", value: parseInt(data[i].BLK) / parseInt(data[i].GP) };
+                var tov = { x: "Tov", value: parseInt(data[i].TOV) / parseInt(data[i].GP) };
+                var datas = [socre, reb, ast, stl, blk, tov];
+                coll.set(data[i].Player, datas);
+            }
+        }
+        document.getElementById("boxes").children[0].children[0].innerHTML = x;
+    });
+    function show(id) {
+        alert(id);
+        console.log(id);
+        console.log(coll.get(id));
+
+        anychart.onDocumentReady(function () {
+            var chart = anychart.radar();
+
+            // color alternating cells
+            chart.yGrid().palette(["gray 0.1", "gray 0.2"]);
+
+            chart.area(coll.get(id)).name(id).markers(true).fill("#E55934", 0.3).stroke("#E55934");
+            // create second series
+            // set chart title
+            chart.title("Data for " + id);
+
+            // set container id for the chart
+            chart.container('rightbox');
+            // initiate chart drawing
+            chart.draw();
+        });
+    }
+
+</script>
+
+<body>
+    <h1>The player data page for Dallas Mavericks</h1>
+
+    <div id="boxes">
+
+        <div id="leftbox">
+            <ol id="play_list">
+            </ol>
+        </div>
+        <div class="intro_style" id="middlebox"><img src="logo/DAL_logo.svg" width="300" height="300" class="center">
+            <h2>Intro</h2>The Dallas Mavericks (often referred to as the Mavs) are an American professional basketball
+            team based in Dallas. The Mavericks compete in the National Basketball Association (NBA) as a member of the
+            Western Conference Southwest Division. The team plays its home games at the American Airlines Center, which
+            it shares with the National Hockey League's Dallas Stars.
+        </div>
+        <div class="intro_style" id="rightbox">The randar charts will be shown here if players are clicked.
+
+        </div>
+    </div>
+
+</body>
+
+</html>
