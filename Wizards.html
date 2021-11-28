@@ -69,6 +69,119 @@
         text-transform: uppercase;
         color: #222;
         }
+    /* timeline structure */
+
+    .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+
+    .timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: black;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+    }
+
+    .container {
+    padding: 5px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 30%;
+    }
+
+    .container::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: white;
+    border: 4px solid black;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+    }
+
+    .left {
+    left: 0;
+    }
+
+    .right {
+    left: 50%;
+    }
+
+    .left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid black;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent black;
+    }
+
+    .right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid black;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent black transparent transparent;
+    }
+
+    .right::after {
+    left: -16px;
+    }
+
+    .content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    border-style:solid; 
+    border-color:black;
+    
+    }
+
+    @media screen and (max-width: 600px) {
+    .timeline::after {
+    left: 31px;
+    }
+    
+    .container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+    }
+    
+    .container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+    }
+
+    .left::after, .right::after {
+    left: 15px;
+    }
+    
+    .right {
+    left: 0%;
+    }
+}
 
 </style>
 <script src='https://d3js.org/d3.v4.min.js'></script>
@@ -96,7 +209,9 @@
         document.getElementById("boxes").children[0].children[0].innerHTML = x;
     });
     function show(id) {
-        alert(id);
+        document.getElementById("boxes").children[2].children[0].style.display = "none";
+        document.getElementById("boxes").children[2].children[1].style.display = "none";
+        document.getElementById("boxes").children[2].children[2].style.display = "none";
         console.log(id);
         console.log(coll.get(id));
 
@@ -132,7 +247,15 @@
         <div class="intro_style" id="middlebox"><img src="logo/WAS_logo.svg" width="300" height="300" class="center"><h2>Intro</h2>The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games at the Capital One Arena, in the Chinatown neighborhood of Washington, D.C.
             The franchise was established in 1961 as the Chicago Packers based in Chicago, Illinois, and were renamed to Chicago Zephyrs the following season. In 1963, they relocated to Baltimore, Maryland, and became the Baltimore Bullets, taking the name from a previous team of the same name. In 1973, the team changed its name to the Capital Bullets to reflect their move to the Washington metropolitan area, and then to Washington Bullets in the following season. In 1997, they rebranded themselves as the Wizards.
             The Wizards have appeared in four NBA Finals, and won in 1978. They have had a total of 28 playoff appearances, won four conference titles (1971, 1975, 1978, 1979) and eight division titles (1969, 1971, 1972, 1973, 1974, 1975, 1979, 2017). Their best season came in 1975 with a record of 60–22. Wes Unseld is the only player in franchise history to become the MVP (1969), and win the Finals MVP award (1978). Four players (Walt Bellamy, Terry Dischinger, Earl Monroe, and Wes Unseld) have won the Rookie of the Year award.</div>
-        <div class="intro_style" id="rightbox">The randar charts will be shown here if players are clicked.
+            <div class="intro_style" id="rightbox"><p style="font-family:Lucida Console; font-size:25px; font-weight: bold;text-align: center">Championships History</p></br>
+                <div class="timeline">
+                    <div class="container left">
+                      <div class="content">
+                        <h2>1978</h2>
+                      </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

@@ -69,7 +69,119 @@
         text-transform: uppercase;
         color: #222;
         }
+        /* timeline structure */
 
+    .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    }
+
+    .timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: black;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+    }
+
+    .container {
+    padding: 5px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 30%;
+    }
+
+    .container::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: white;
+    border: 4px solid black;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+    }
+
+    .left {
+    left: 0;
+    }
+
+    .right {
+    left: 50%;
+    }
+
+    .left::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    right: 30px;
+    border: medium solid black;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent black;
+    }
+
+    .right::before {
+    content: " ";
+    height: 0;
+    position: absolute;
+    top: 22px;
+    width: 0;
+    z-index: 1;
+    left: 30px;
+    border: medium solid black;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent black transparent transparent;
+    }
+
+    .right::after {
+    left: -16px;
+    }
+
+    .content {
+    padding: 20px 30px;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    border-style:solid; 
+    border-color:black;
+    
+    }
+
+    @media screen and (max-width: 600px) {
+    .timeline::after {
+    left: 31px;
+    }
+    
+    .container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+    }
+    
+    .container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+    }
+
+    .left::after, .right::after {
+    left: 15px;
+    }
+    
+    .right {
+    left: 0%;
+    }
+}
 </style>
 <script src='https://d3js.org/d3.v4.min.js'></script>
 <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js"></script>
@@ -96,7 +208,9 @@
         document.getElementById("boxes").children[0].children[0].innerHTML = x;
     });
     function show(id) {
-        alert(id);
+        document.getElementById("boxes").children[2].children[0].style.display = "none";
+        document.getElementById("boxes").children[2].children[1].style.display = "none";
+        document.getElementById("boxes").children[2].children[2].style.display = "none";
         console.log(id);
         console.log(coll.get(id));
 
@@ -129,9 +243,96 @@
             <ol id="play_list">
             </ol>
         </div>
+        <!-- 1957, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1968, 1969, 1974, 1976, 1981, 1984, 1986, 2008 -->
         <div class="intro_style" id="middlebox"><img src="logo/BOS_logo.svg" width="300" height="300" class="center"><h2>Intro</h2>The Boston Celtics are an American professional basketball team based in Boston. The Celtics compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Atlantic Division. Founded in 1946 as one of the league's original eight teams, the Celtics play their home games at TD Garden, which they share with the National Hockey League's Boston Bruins. The Celtics are regarded as one of the most successful basketball teams in NBA history; the franchise is tied with the Los Angeles Lakers for most NBA Championships won with 17 (accounting for 23.6 percent of all NBA championships since the league's founding) and currently holds the record for the most recorded wins of any NBA team. The Celtics are one of the two charter BAA franchises (the other is the New York Knicks) still playing in their original city.</div>
-        <div class="intro_style" id="rightbox">The randar charts will be shown here if players are clicked.
-
+        <div class="intro_style" id="rightbox"><p style="font-family:Lucida Console; font-size:25px; font-weight: bold;text-align: center">Championships History</p></br>
+            <div class="timeline">
+                <div class="container left">
+                  <div class="content">
+                    <h2>1957</h2>
+                  </div>
+                </div>
+                <div class="container right">
+                  <div class="content">
+                    <h2>1959</h2>
+                  </div>
+                </div>
+                <div class="container left">
+                  <div class="content">
+                    <h2>1960</h2>
+                  </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1961</h2>
+                    </div>
+                  </div>
+                  <div class="container left">
+                  <div class="content">
+                    <h2>1962</h2>
+                  </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1963</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>1964</h2>
+                    </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1965</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>1966</h2>
+                    </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1968</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>1969</h2>
+                    </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1974</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>1976</h2>
+                    </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1981</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>1984</h2>
+                    </div>
+                </div>
+                <div class="container right">
+                    <div class="content">
+                      <h2>1986</h2>
+                    </div>
+                </div>
+                <div class="container left">
+                    <div class="content">
+                      <h2>2008</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
