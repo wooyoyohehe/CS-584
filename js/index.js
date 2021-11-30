@@ -131,23 +131,6 @@ function click_on_team(d) {
 
 
 function click_on_state(d) {
-    if (active.node() == this) {
-        active.style("fill", function(d) {
-            var EASTorWEST = d.properties.EASTorWEST;
-            if (EASTorWEST) {
-                if (EASTorWEST == "East") {
-                    return "#C6E2FF";
-                } else {
-                    return "#FFB6C1";
-                }
-            } else {
-                return "#CCCCCC";
-            }
-        });
-        stateAbb = d3.select(this).attr("class");
-        svg.selectAll(".text-" + stateAbb).remove();
-    }
-
     active = d3.select(this).style("fill", "orange");
 
     var bounds = path.bounds(d),
